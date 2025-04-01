@@ -43,7 +43,7 @@ export function Users({ type }: { type: 'create' | 'edit' }) {
   const languagesQuery = useLanguages();
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
-  const usersQuery = useUsers();
+  // const usersQuery = useUsers();
 
   const { watch, control, unregister, reset, setValue, handleSubmit } =
     useFormContext<Schema>();
@@ -104,7 +104,7 @@ export function Users({ type }: { type: 'create' | 'edit' }) {
   return (
     <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack sx={{ flexDirection: 'row', gap: 2 }}>
-        <List subheader={<ListSubheader>Users</ListSubheader>}>
+        {/* <List subheader={<ListSubheader>Users</ListSubheader>}>
           {usersQuery.data?.map((user) => (
             <ListItem disablePadding key={user.id}>
               <ListItemButton onClick={() => handleUserClick(user.id)} selected={id === user.id}>
@@ -112,7 +112,7 @@ export function Users({ type }: { type: 'create' | 'edit' }) {
               </ListItemButton>
             </ListItem>
           ))}
-        </List>
+        </List> */}
 
         <Stack sx={{ gap: 2 }}>
           <RHFTextField<Schema> name="name" label="Name" />

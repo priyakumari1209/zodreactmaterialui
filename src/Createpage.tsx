@@ -11,7 +11,7 @@ const Createpage: React.FC = () => {
       <h1>Users Data</h1>
       <p>This page displays Create page.</p>
       <button onClick={() => navigate("/")}>Go to Users Page</button>
-      <UsersProvider/>
+      <UsersProvider type="create"/>
     </div>
   );
 };

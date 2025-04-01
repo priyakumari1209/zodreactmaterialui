@@ -88,7 +88,7 @@ export function useUser(id: string) {
           new Date(data.formerEmploymentPeriod[1]),
         ],
         gender: data.gender,
-       
+        languagesSpoken: data.languagesSpoken,
         registrationDateAndTime: new Date(data.registrationDateAndTime),
         salaryRange: [data.salaryRange[0], data.salaryRange[1]],
         skills: data.skills,

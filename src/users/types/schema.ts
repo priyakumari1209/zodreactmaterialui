@@ -46,7 +46,7 @@ import { z } from 'zod';
  export const defaultValues: Schema = {
  	variant: 'create',
  	email: '',
- 	name: '',
+ 	name: 'Your name',
  	states: [],
  	languagesSpoken: [],
  	gender: '',
