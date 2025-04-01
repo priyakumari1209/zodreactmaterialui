@@ -1,0 +1,7 @@
+{
+    "users": [
+      { "id": 1, "name": "David", "email": "david@gmail.com", "gender": "Male", "states": "California", "skills": "Productive, Creative" },
+      { "id": 2, "name": "Robert", "email": "robert@gmail.com", "gender": "Male", "states": "Texas", "skills": "Leadership, Communication" },
+    ]
+  }
+  
