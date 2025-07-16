@@ -17,7 +17,7 @@ const EditUser: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    fetch("/data.json") // Make sure this file contains valid user data
+    fetch("/data.json")
       .then((response) => response.json())
       .then((data) => {
         const foundUser = data.users.find((u: User) => u.id === parseInt(id ?? "0", 10));
@@ -40,7 +40,7 @@ const EditUser: React.FC = () => {
     e.preventDefault();
     if (user) {
       console.log("Updated User Data:", user);
-      navigate("/"); // Navigate back after saving
+      navigate("/"); 
     }
   };
 

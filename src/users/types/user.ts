@@ -3,7 +3,7 @@ export type User = {
     "formerEmploymentPeriod": string[],
     "name": string,
     "gender": string,
-    "languagesSpoken": string,
+    "languagesSpoken": string[],
     "registrationDateAndTime": string,
     "salaryRange": number[],
     "skills": string[],

@@ -1,0 +1,29 @@
+import { FormProvider, useForm } from 'react-hook-form';
+ 
+ import { DevTool } from '@hookform/devtools';
+ import { zodResolver } from '@hookform/resolvers/zod';
+ 
+ import { defaultValues, Schema, schema } from '../types/schema';
+ import { Users } from './Users';
+ 
+ type BlogsProviderProps = {
+    type: 'create' | 'edit',
+    user?: Schema;
+ }
+ 
+
+ export function BlogsProvider({type,user}: BlogsProviderProps) {
+    const methods = useForm<Schema>({
+        mode: 'all',
+        resolver: zodResolver(schema),
+        defaultValues: user != undefined ? user : defaultValues,
+    });
+    console.log(methods.formState.errors);
+    
+    return (
+        <FormProvider {...methods}>
+        <Users type={type}/>
+            <DevTool control={methods.control} />
+        </FormProvider>
+    );
+}

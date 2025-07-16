@@ -60,12 +60,21 @@ const AuthenticatedDrawer: React.FC<AuthenticatedDrawerProps> = ({ close, handle
             <ListItemText primary="Userdata" />
           </ListItemButton>
         </ListItem>
+       
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate("/create")}> 
+          <ListItemButton onClick={() => navigate("/post-create")}> 
             <ListItemIcon>
               <GroupIcon />
             </ListItemIcon>
-            <ListItemText primary="Userform" />
+            <ListItemText primary="Post create" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate("/post-edit")}> 
+            <ListItemIcon>
+              <GroupIcon />
+            </ListItemIcon>
+            <ListItemText primary="Post edit" />
           </ListItemButton>
         </ListItem>
       </List>

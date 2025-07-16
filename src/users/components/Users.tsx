@@ -1,23 +1,6 @@
 import { Fragment, useEffect } from 'react';
-import {
-  SubmitHandler,
-  useFieldArray,
-  useFormContext,
-  useWatch,
-} from 'react-hook-form';
-
-import {
-  Button,
-  Container,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListSubheader,
-  Stack,
-  Typography,
-} from '@mui/material';
-
+import { SubmitHandler, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { Button, Container, Stack, Typography } from '@mui/material';
 import { RHFAutocomplete } from '../../components/RHFAutocomplete';
 import { RHFCheckbox } from '../../components/RHFCheckbox';
 import { RHFDateRangePicker } from '../../components/RHFDateRangePicker';
@@ -28,38 +11,28 @@ import { RHFSwitch } from '../../components/RHFSwitch';
 import { RHFTextField } from '../../components/RHFTextField';
 import { RHFToggleButtonGroup } from '../../components/RHFToggleButtonGroup';
 import { useCreateUser, useEditUser } from '../services/mutations';
-import {
-  useGenders,
-  useLanguages,
-  useSkills,
-  useStates,
-  useUser,
-  useUsers,
-} from '../services/queries';
+import { useGenders, useLanguages, useSkills, useStates, useUser, useUsers } from '../services/queries';
 import { defaultValues, Schema } from '../types/schema';
+import { useNavigate } from 'react-router-dom';
 
 export function Users({ type }: { type: 'create' | 'edit' }) {
+  const navigate = useNavigate(); 
   const statesQuery = useStates();
   const languagesQuery = useLanguages();
   const gendersQuery = useGenders();
   const skillsQuery = useSkills();
   const usersQuery = useUsers();
-
-  const { watch, control, unregister, reset, setValue, handleSubmit } =
-    useFormContext<Schema>();
+  const { watch, control, unregister, reset, setValue, handleSubmit } = useFormContext<Schema>();
 
   const id = useWatch({ control, name: 'id' });
   const variant = useWatch({ control, name: 'variant' });
-
   const userQuery = useUser(id);
 
   useEffect(() => {
-    const sub = watch((value) => {
-      console.log(value);
-    });
-
-    return () => sub.unsubscribe();
-  }, [watch]);
+    if (userQuery.data) {
+      reset(userQuery.data);
+    }
+  }, [reset, userQuery.data]);
 
   const isTeacher = useWatch({ control, name: 'isTeacher' });
 
@@ -68,60 +41,33 @@ export function Users({ type }: { type: 'create' | 'edit' }) {
     name: 'students',
   });
 
-  const handleUserClick = (id: number) => {
-    setValue('id', id);
-  };
-
-  useEffect(() => {
-    if (!isTeacher) {
-      replace([]);
-      unregister('students');
-    }
-  }, [isTeacher, replace, unregister]);
-
-  useEffect(() => {
-    if (userQuery.data) {
-      reset(userQuery.data);
-    }
-  }, [reset, userQuery.data]);
-
-  const handleReset = () => {
-    reset(defaultValues);
-  };
-
   const createUserMutation = useCreateUser();
   const editUserMutation = useEditUser();
 
   const onSubmit: SubmitHandler<Schema> = (data) => {
     if (variant === 'create') {
-      createUserMutation.mutate(data);
+      createUserMutation.mutate(data, {
+        onSuccess: () => {
+          navigate('/'); 
+        },
+      });
     } else {
-		console.log("Here");
-      editUserMutation.mutate(data);
+      editUserMutation.mutate(data, {
+        onSuccess: () => {
+          navigate('/'); 
+        },
+      });
     }
   };
 
   return (
     <Container maxWidth="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack sx={{ flexDirection: 'row', gap: 2 }}>
-        <List subheader={<ListSubheader>Users</ListSubheader>}>
-          {usersQuery.data?.map((user) => (
-            <ListItem disablePadding key={user.id}>
-              <ListItemButton onClick={() => handleUserClick(user.id)} selected={id === user.id}>
-                <ListItemText primary={user.name} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-
         <Stack sx={{ gap: 2 }}>
           <RHFTextField<Schema> name="name" label="Name" />
           <RHFTextField<Schema> name="email" label="Email" />
           <RHFAutocomplete<Schema> name="states" label="States" options={statesQuery.data} />
-          <RHFToggleButtonGroup<Schema>
-            name="languagesSpoken"
-            options={languagesQuery.data || []}
-          />
+          <RHFToggleButtonGroup<Schema> name="languagesSpoken" options={languagesQuery.data || []} />
           <RHFRadioGroup<Schema> name="gender" options={gendersQuery.data} label="Gender" />
           <RHFCheckbox<Schema> name="skills" options={skillsQuery.data} label="Skills" />
           <RHFDateTimePicker<Schema> name="registrationDateAndTime" label="Registration Date & Time" />
@@ -149,7 +95,7 @@ export function Users({ type }: { type: 'create' | 'edit' }) {
             <Button color={type === 'create' ? 'primary' : 'secondary'} variant="contained" type="submit">
               {type === 'create' ? 'Create' : 'Update'}
             </Button>
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={() => reset(defaultValues)}>Reset</Button>
           </Stack>
         </Stack>
       </Stack>

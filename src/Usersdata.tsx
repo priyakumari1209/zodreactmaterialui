@@ -57,17 +57,16 @@ const UsersPage: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-             {isLoading && Array.from({length: 7}).map((_, index) => {
-              return <TableRow key={index}>
-              <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
-              <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
-              <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
-              <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
-              <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
-              <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
-              <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
-              </TableRow>
-            })}
+            {/* {Array.from({length:7}).map} */}
+         {isLoading  && <TableRow>
+          <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
+          <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
+          <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
+          <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
+          <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
+          <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
+          <TableCell><Skeleton variant="rounded" height={30} /></TableCell>
+          </TableRow>}
             {data?.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.id}</TableCell>
